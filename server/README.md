@@ -22,8 +22,31 @@
     
     - app.js            <!-- setup our application -->
 
+# HTTP requests
+#### Description
+Creates a new user in the database
+## POST Signup
+`http://localhost:8080/api/signup`
+#### HEADERS
+**Content-Type** application/x-www-form-urlencoded
+#### BODY
+**username** test@example.com
+
+**password** 1234
+
+## POST Signin
+`http://localhost:8080/api/signin`
+#### Description
+Creates a signed token and returns it in response
+#### HEADERS
+**Content-Type** application/x-www-form-urlencoded
+#### BODY
+**username** test@example.com
+
+**password** 1234
+
 # Authentication
-## Dependencies
+### Dependencies
 - Passport
 - JSON Web Token (JWT)
 ## How does it works ?
