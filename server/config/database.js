@@ -1,4 +1,4 @@
 module.exports = {
-    'secret':'nodeauthsecret',
-    'database': 'mongodb://localhost/node-auth'
+    'secret':'nodeareasecret',
+    'database': 'mongodb://localhost/area'
 };

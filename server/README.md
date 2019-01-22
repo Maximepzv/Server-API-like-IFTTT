@@ -1,0 +1,32 @@
+# Application structure:
+    - bin
+    ------ www          <!-- node startup scripts -->    
+    
+    - config
+    ------ database.js  <!-- will hold our database connection settings -->
+    ------ passport.js  <!-- configuring the strategies for passport -->
+    
+    - models
+        ------ user.js  <!-- our user model -->
+    
+    - public            <!-- our ressources html -->
+    
+    - routes            <!-- all the routes for our application -->
+    
+    - views
+    ------ index.jade   <!-- show our home page -->
+    ------ error.jade   <!-- show our error page -->
+    ------ layout.jade  <!-- our html layout -->
+    
+    - package.json      <!-- handle our npm packages -->
+    
+    - app.js            <!-- setup our application -->
+
+# Authentication
+## Dependencies
+- Passport
+- JSON Web Token (JWT)
+## How does it works ?
+- When the user logs in, the backend creates a signed token and returns it in response
+- The client saves the token locally (typically in localStorage) and sends it back in every subsequent request that needs authentication
+- All requests needing authentication pass through a middleware that checks the provided token and allows the request only if the token is verified

@@ -1,10 +1,9 @@
 var passport = require('passport');
-var config = require('../config/database');
-require('../config/passport')(passport);
+var config = require('../../config/database');
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../models/user");
+var User = require("../../models/user");
 
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
@@ -46,6 +45,11 @@ router.post('/signin', function(req, res) {
             });
         }
     });
+});
+
+router.get('/signout', passport.authenticate('jwt', { session: false}), function(req, res) {
+    req.logout();
+    res.json({success: true, msg: 'Sign out successfully.'});
 });
 
 getToken = function (headers) {
