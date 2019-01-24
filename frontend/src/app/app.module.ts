@@ -14,9 +14,11 @@ import {AuthenticationService} from "./api/authentification.service";
 import {AlertService} from "./service/alert.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./guards/auth.guard";
+import { AreaComponent } from './area/area.component';
 
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    {path: '', component: AreaComponent},
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'signup', component: SignupComponent},
     { path: 'signin', component: SigninComponent},
 ];
@@ -27,6 +29,7 @@ const appRoutes: Routes = [
       SignupComponent,
       SigninComponent,
       HomeComponent,
+      AreaComponent,
   ],
   imports: [
       BrowserModule,

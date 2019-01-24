@@ -7,9 +7,12 @@
     </div>
   </div>
   <div class="nav navbar-nav navbar-expand navbar-right">
-    <div class="navbar-nav">
+    <div *ngIf="!connected" class="navbar-nav">
       <a class="nav-item nav-link" routerLink="/signin">Login</a>
       <a class="nav-item nav-link" routerLink="/signup">Sign Up</a>
+    </div>
+    <div *ngIf="connected" class="navbar-nav">
+      <a class="nav-item nav-link" (click)="logout()" routerLink="signin">Logout</a>
     </div>
   </div>
 </nav>

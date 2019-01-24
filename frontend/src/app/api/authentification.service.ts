@@ -8,7 +8,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   signin(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/signin`, { username: username, password: password })
+    return this.http.post<any>(`${environment.apiUrl}signin`, { username: username, password: password })
       .pipe(map(user => {
         console.log(user);
         // login successful if there's a jwt token in the response
@@ -26,9 +26,8 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  signup(username: string, password: string) {
-    console.log('${environment.apiUrl}/signup');
-    console.log({ username: username, password: password });
-    return this.http.post<any>(`${environment.apiUrl}/signup`, { username: username, password: password })
+  signup(body) {
+    console.log(body);
+    return this.http.post<any>(`${environment.apiUrl}signup`, body)
   }
 }

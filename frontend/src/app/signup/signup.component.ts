@@ -20,6 +20,9 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -33,12 +36,21 @@ export class SignupComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.registerForm.invalid) {
-      console.log("Form is invalid");
+      console.log(this.registerForm.getRawValue());
       return;
     }
 
     this.loading = true;
-    this.authenticationService.signup(this.f.username.value, this.f.password.value)
+
+    var body = {
+      firstname: this.f.firstName.value,
+      lastname: this.f.lastName.value,
+      email: this.f.email.value,
+      username: this.f.username.value,
+      password: this.f.password.value
+    };
+
+    this.authenticationService.signup(body)
       .pipe(first())
       .subscribe(
         data => {

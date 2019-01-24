@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService} from "../../api/authentification.service";
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  connected = false;
 
-  constructor() { }
+  constructor(
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    if (localStorage.getItem('currentUser') !== null) {
+      this.connected = true;
+    }
+  }
+
+  logout() {
+    console.log("LOGOUT");
+    this.authenticationService.logout();
+
   }
 
 }
