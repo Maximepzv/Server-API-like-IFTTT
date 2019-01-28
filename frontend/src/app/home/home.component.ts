@@ -8,7 +8,7 @@ export class HomeComponent implements OnInit {
 
   constructor() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(this.currentUser.username)
+    console.log(this.currentUser);
   }
 
   ngOnInit() {
