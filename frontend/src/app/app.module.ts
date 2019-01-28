@@ -15,6 +15,7 @@ import {AlertService} from "./service/alert.service";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./guards/auth.guard";
 import { AreaComponent } from './area/area.component';
+import { MDBBootstrapModule } from "angular-bootstrap-md";
 
 const appRoutes: Routes = [
     {path: '', component: AreaComponent},
@@ -38,7 +39,9 @@ const appRoutes: Routes = [
       UiModule,
       FontAwesomeModule,
       ReactiveFormsModule,
-      HttpClientModule
+      HttpClientModule,
+      MDBBootstrapModule.forRoot(),
+      FormsModule
   ],
   providers: [
     AuthenticationService,

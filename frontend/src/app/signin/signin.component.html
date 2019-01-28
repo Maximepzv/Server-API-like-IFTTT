@@ -1,21 +1,48 @@
-<h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-      <div *ngIf="f.username.errors.required">Username is required</div>
-    </div>
+<!-- Default form login -->
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container col-3 text-center border border-light p-5">
+
+  <p class="h4 mb-4">Sign in</p>
+
+  <!-- Username -->
+  <input type="text" id="defaultLoginFormEmail" formControlName="username" class="form-control mb-4" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Username" />
+  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+    <div *ngIf="f.username.errors.required">Username is required</div>
+    <br>
   </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-      <div *ngIf="f.password.errors.required">Password is required</div>
-    </div>
+
+  <!-- Password -->
+  <input type="password" id="defaultLoginFormPassword" formControlName="password" class="form-control mb-4" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+    <div *ngIf="f.password.errors.required">Password is required</div>
   </div>
-  <div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary">Login</button>
-    <a [routerLink]="['/signup']" class="btn btn-link">Sign Up</a>
-  </div>
+
+  <!-- Sign in button -->
+  <button [disabled]="loading" mdbBtn color="info" block="true" class="my-4" type="submit">Sign in</button>
+
+  <!-- Register -->
+  <p>Not a member?
+    <a [routerLink]="['/signup']">Register</a>
+  </p>
+
+  <!-- Social login -->
+  <p>or sign in with:</p>
+
+  <a type="button" class="light-blue-text mx-2">
+    <!-- <i class="fab fa-facebook-f"></i> -->
+    <mdb-icon fab icon="facebook"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <!-- <i class="fab fa-twitter"></i> -->
+    <mdb-icon fab icon="twitter"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <!-- <i class="fab fa-linkedin-in"></i> -->
+    <mdb-icon fab icon="linkedin"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <!-- <i class="fab fa-github"></i> -->
+    <mdb-icon fab icon="github"></mdb-icon>
+  </a>
+
 </form>
+<!-- Default form login -->
