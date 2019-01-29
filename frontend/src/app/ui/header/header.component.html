@@ -1,9 +1,8 @@
 <nav class="navbar navbar-dark bg-dark mb-5">
   <a class="navbar-brand" routerLink='/'>AREA</a>
-  <div class="navbar-expand mr-auto">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink='#'>About</a>
-      <a class="nav-item nav-link" routerLink='#'>Contact</a>
+  <div class="nav navbar-nav navbar-expand navbar-left">
+    <div *ngIf="connected" class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/applets">Applets</a>
     </div>
   </div>
   <div class="nav navbar-nav navbar-expand navbar-right">

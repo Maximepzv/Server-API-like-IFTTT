@@ -16,12 +16,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthGuard} from "./guards/auth.guard";
 import { AreaComponent } from './area/area.component';
 import { MDBBootstrapModule } from "angular-bootstrap-md";
+import { AppletsComponent } from './applets/applets.component';
 
 const appRoutes: Routes = [
     {path: '', component: AreaComponent},
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'signup', component: SignupComponent},
     { path: 'signin', component: SigninComponent},
+    { path: 'applets', component: AppletsComponent},
 ];
 
 @NgModule({
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
       SigninComponent,
       HomeComponent,
       AreaComponent,
+      AppletsComponent,
   ],
   imports: [
       BrowserModule,
