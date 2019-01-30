@@ -12,7 +12,7 @@ var passport = require('passport');
 var cors = require('cors');
 
 var config = require('./config/database');
-var authLocal = require('./routes/auth/local');
+var auth = require('./routes/auth');
 
 // configuration ===============================================================
 require('./config/passport')(passport); // pass passport for configuration
@@ -39,11 +39,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // routes ======================================================================
-app.get('/', function(req, res) {
-  res.send('Page under construction.');
-});
 
-app.use('/api', authLocal);
+app.use('/api', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

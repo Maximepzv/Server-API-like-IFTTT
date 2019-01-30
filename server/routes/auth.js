@@ -1,17 +1,23 @@
 var passport = require('passport');
-var config = require('../../config/database');
+var config = require('../config/database');
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../../models/user");
+var User = require("../models/user");
+
+
+/* LOCAL ROUTER */
 
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({success: false, msg: 'Please pass username and password.'});
     } else {
-        var newUser = new User({
+        let newUser = new User({
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            firstName: req.body.firstname,
+            lastName: req.body.lastname,
+            email: req.body.email
         });
         // save the user
         newUser.save(function(err) {
@@ -47,14 +53,19 @@ router.post('/signin', function(req, res) {
     });
 });
 
-router.get('/signout', passport.authenticate('jwt', { session: false}), function(req, res) {
-    req.logout();
-    res.json({success: true, msg: 'Sign out successfully.'});
+router.get('/testAuth', passport.authenticate('jwt', { session: false}), function(req, res) {
+    let token = getToken(req.headers);
+
+    if (token) {
+        return res.status(200).send({success: true, msg: 'Authorized.'});
+    } else {
+        return res.status(403).send({success: false, msg: 'Unauthorized.'});
+    }
 });
 
 getToken = function (headers) {
     if (headers && headers.authorization) {
-        var parted = headers.authorization.split(' ');
+        let parted = headers.authorization.split(' ');
 
         if (parted.length === 2) {
             return parted[1];
