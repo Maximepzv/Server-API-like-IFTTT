@@ -1,0 +1,44 @@
+<!-- Default form login -->
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="container col-3 text-center border border-light p-5">
+
+  <p class="h4 mb-4">Sign in</p>
+
+  <!-- Username -->
+  <input type="text" id="defaultLoginFormEmail" formControlName="username" class="form-control mb-4" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" placeholder="Username" />
+  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+    <div *ngIf="f.username.errors.required">Username is required</div>
+    <br>
+  </div>
+
+  <!-- Password -->
+  <input type="password" id="defaultLoginFormPassword" formControlName="password" class="form-control mb-4" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password" />
+  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+    <div *ngIf="f.password.errors.required">Password is required</div>
+  </div>
+
+  <!-- Sign in button -->
+  <button [disabled]="loading" mdbBtn color="info" block="true" class="my-4" type="submit">Sign in</button>
+
+  <!-- Register -->
+  <p>Not a member?
+    <a [routerLink]="['/signup']">Register</a>
+  </p>
+
+  <!-- Social login -->
+  <p>or sign in with:</p>
+
+  <a type="button" class="light-blue-text mx-2">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+    <i class="fab fa-github"></i>
+  </a>
+
+</form>
+<!-- Default form login -->
