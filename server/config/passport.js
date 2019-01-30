@@ -1,6 +1,8 @@
 var JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 
+var FacebookTokenStrategy = require('passport-facebook-token');
+
 // load up the user model
 var User = require('../models/user');
 var dbConfig = require('./database'); // get db config file
@@ -22,4 +24,15 @@ module.exports = function(passport) {
             }
         });
     }));
+
+    passport.use(new FacebookTokenStrategy({
+            clientID: config.oauth.facebook.clientID,
+            clientSecret: config.oauth.facebook.clientSecret
+        },
+        function(accessToken, refreshToken, profile, done) {
+            User.upsertFbUser(accessToken, refreshToken, profile, function(err, user) {
+                return done(err, user);
+            });
+        }
+    ));
 };

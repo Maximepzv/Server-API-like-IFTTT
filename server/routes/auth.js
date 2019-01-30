@@ -5,12 +5,11 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 var User = require("../models/user");
 
-
 /* LOCAL ROUTER */
 
 router.post('/signup', function(req, res) {
-    if (!req.body.username || !req.body.password) {
-        res.json({success: false, msg: 'Please pass username and password.'});
+    if (!req.body.email || !req.body.password) {
+        res.json({success: false, msg: 'Please pass email and password.'});
     } else {
         let newUser = new User({
             username: req.body.username,
@@ -22,7 +21,7 @@ router.post('/signup', function(req, res) {
         // save the user
         newUser.save(function(err) {
             if (err) {
-                return res.json({success: false, msg: 'Username already exists.'});
+                return res.json({success: false, msg: 'Username or Email already exists.'});
             }
             res.json({success: true, msg: 'Successful created new user.'});
         });
@@ -30,9 +29,10 @@ router.post('/signup', function(req, res) {
 });
 
 router.post('/signin', function(req, res) {
-    User.findOne({
-        username: req.body.username
-    }, function(err, user) {
+    User.findOne({$or:[
+            {username: req.body.username},
+            {email: req.body.username}
+    ]}, function(err, user) {
         if (err) throw err;
 
         if (!user) {
@@ -62,6 +62,32 @@ router.get('/testAuth', passport.authenticate('jwt', { session: false}), functio
         return res.status(403).send({success: false, msg: 'Unauthorized.'});
     }
 });
+
+generateToken = function (req, res, next) {
+    req.token = createToken(req.user);
+    next();
+};
+
+sendToken = function (req, res) {
+    res.json({success: true, token: 'JWT ' + req.token});
+};
+
+createToken = function(user) {
+    return jwt.sign(user.toJSON(), config.secret);
+};
+
+router.post('/auth/facebook', passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
+        if (!req.user) {
+            return res.send(401, 'User Not Authenticated');
+        }
+
+        // prepare token for API
+        req.auth = {
+            id: req.user.id
+        };
+
+        next();
+    }, generateToken, sendToken);
 
 getToken = function (headers) {
     if (headers && headers.authorization) {

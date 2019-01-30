@@ -17,6 +17,7 @@ var auth = require('./routes/auth');
 // configuration ===============================================================
 require('./config/passport')(passport); // pass passport for configuration
 
+mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database, { useCreateIndex: true, useNewUrlParser: true })
     .then(() =>  console.log('connection to database successful'))
