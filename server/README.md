@@ -45,6 +45,23 @@ Creates a signed token and returns it in response
 
 **password** 1234
 
+## GET getServices
+`http://localhost:8080/api/getservices`
+#### HEADERS
+**Authorization** JWT {{token}}
+#### RESPONSE
+List of services to which the user is connected 
+
+    "msg": [
+        {
+            "google": {...},
+            "twitter": {...},
+            "facebook": {...},
+            ...
+        },
+        "_id": "..."
+    ]
+
 # Authentication
 ### Dependencies
 - Passport
@@ -76,6 +93,14 @@ Creates a signed token and returns it in response
             required: true
         },
         facebook: {
+            token: String,
+            id: String
+        },
+        google: {
+            token: String,
+            id: String
+        },
+        twitter: {
             token: String,
             id: String
         }

@@ -13,6 +13,7 @@ var cors = require('cors');
 
 var config = require('./config/database');
 var auth = require('./routes/auth');
+var recipe = require('./routes/recipe');
 
 // configuration ===============================================================
 require('./config/passport')(passport); // pass passport for configuration
@@ -42,6 +43,7 @@ app.set('view engine', 'jade');
 // routes ======================================================================
 
 app.use('/api', auth);
+app.use('/api', recipe);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

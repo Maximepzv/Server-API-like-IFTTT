@@ -64,6 +64,7 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     });
 };
 
+/* FACEBOOK INSERT OR UPDATE USER */
 UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
     let that = this;
 

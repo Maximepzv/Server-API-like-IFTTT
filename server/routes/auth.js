@@ -5,6 +5,36 @@ var jwt = require('jsonwebtoken');
 var router = express.Router();
 var User = require("../models/user");
 
+
+/* TOKEN METHOD */
+
+generateToken = function (req, res, next) {
+    req.token = createToken(req.user);
+    next();
+};
+
+sendToken = function (req, res) {
+    res.json({success: true, token: 'JWT ' + req.token});
+};
+
+createToken = function(user) {
+    return jwt.sign(user.toJSON(), config.secret);
+};
+
+getToken = function (headers) {
+    if (headers && headers.authorization) {
+        let parted = headers.authorization.split(' ');
+
+        if (parted.length === 2) {
+            return parted[1];
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
+};
+
 /* LOCAL ROUTER */
 
 router.post('/signup', function(req, res) {
@@ -28,7 +58,7 @@ router.post('/signup', function(req, res) {
     }
 });
 
-router.post('/signin', function(req, res) {
+router.post('/signin', function(req, res, next) {
     User.findOne({$or:[
             {username: req.body.username},
             {email: req.body.username}
@@ -42,42 +72,35 @@ router.post('/signin', function(req, res) {
             user.comparePassword(req.body.password, function (err, isMatch) {
                 if (isMatch && !err) {
                     // if user is found and password is right create a token
-                    var token = jwt.sign(user.toJSON(), config.secret);
                     // return the information including token as JSON
-                    res.json({success: true, token: 'JWT ' + token});
+                    req.user = user;
+                    next();
                 } else {
                     res.status(401).send({success: false, msg: 'Authentication failed. Wrong password.'});
                 }
             });
         }
     });
-});
+}, generateToken, sendToken);
 
-router.get('/testAuth', passport.authenticate('jwt', { session: false}), function(req, res) {
-    let token = getToken(req.headers);
-
-    if (token) {
-        return res.status(200).send({success: true, msg: 'Authorized.'});
-    } else {
-        return res.status(403).send({success: false, msg: 'Unauthorized.'});
+/* GOOGLE */
+router.post('/auth/google', passport.authenticate('google', {session: false}), function (req, res, next) {
+    if (!req.user) {
+        return res.send(401, 'User Not Authenticated');
     }
-});
 
-generateToken = function (req, res, next) {
-    req.token = createToken(req.user);
-    next();
-};
+    // prepare token for API
+    req.auth = {
+        id: req.user.id
+    };
 
-sendToken = function (req, res) {
-    res.json({success: true, token: 'JWT ' + req.token});
-};
+    //next();
+}, generateToken, sendToken);
 
-createToken = function(user) {
-    return jwt.sign(user.toJSON(), config.secret);
-};
+/* FACEBOOK */
 
 router.post('/auth/facebook', passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
-        if (!req.user) {
+    if (!req.user) {
             return res.send(401, 'User Not Authenticated');
         }
 
@@ -86,21 +109,20 @@ router.post('/auth/facebook', passport.authenticate('facebook-token', {session: 
             id: req.user.id
         };
 
-        next();
+    next();
     }, generateToken, sendToken);
 
-getToken = function (headers) {
-    if (headers && headers.authorization) {
-        let parted = headers.authorization.split(' ');
+/* TEST AUTH */
 
-        if (parted.length === 2) {
-            return parted[1];
-        } else {
-            return null;
-        }
+router.get('/testAuth', passport.authenticate('jwt', { session: false}), function(req, res) {
+    let token = getToken(req.headers);
+    console.log(req.user);
+
+    if (token) {
+        return res.status(200).send({success: true, msg: 'Authorized.'});
     } else {
-        return null;
+        return res.status(403).send({success: false, msg: 'Unauthorized.'});
     }
-};
+});
 
 module.exports = router;
