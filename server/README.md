@@ -1,32 +1,23 @@
-# Application structure:
-    - bin
-    ------ www          <!-- node startup scripts -->    
-    
-    - config
-    ------ database.js  <!-- will hold our database connection settings -->
-    ------ passport.js  <!-- configuring the strategies for passport -->
+# Application structure:    
+    - properties
+    ------ config.json    <!-- will hold our datas configuration -->
     
     - models
-        ------ user.js  <!-- our user model -->
+        ------ user.js    <!-- our user model -->
+        ------ recipe.js  <!-- our action / reaction model -->
+        
+    - src/api             <!-- all the routes for our application -->
+    - src/services        <!-- all our global functions and external services -->
     
-    - public            <!-- our ressources html -->
+    - package.json        <!-- handle our npm packages -->
     
-    - routes            <!-- all the routes for our application -->
-    
-    - views
-    ------ index.jade   <!-- show our home page -->
-    ------ error.jade   <!-- show our error page -->
-    ------ layout.jade  <!-- our html layout -->
-    
-    - package.json      <!-- handle our npm packages -->
-    
-    - app.js            <!-- setup our application -->
+    - index.js            <!-- setup our application -->
 
 # HTTP requests
-#### Description
-Creates a new user in the database
 ## POST Signup
 `http://localhost:8080/api/signup`
+#### Description
+Creates a new user in the database
 #### HEADERS
 **Content-Type** application/x-www-form-urlencoded
 #### BODY
@@ -44,6 +35,26 @@ Creates a signed token and returns it in response
 **username** test@example.com
 
 **password** 1234
+
+## POST Authentication with Facebook
+`http://localhost:8080/api/auth/facebook`
+#### Description
+Create or find user in database then creates a signed token and returns it in response
+#### HEADERS
+**Content-Type** application/x-www-form-urlencoded
+#### BODY
+**access_token** access_token from facebook
+
+## POST Add Facebook service to the user
+`http://localhost:8080/api/auth/facebook`
+#### Description
+Add the facebook service to the user then creates a signed token and returns it in response
+#### HEADERS
+**Content-Type** application/x-www-form-urlencoded
+**Authorization** JWT {{token}}
+#### BODY
+**access_token** access_token from facebook
+
 
 ## GET getServices
 `http://localhost:8080/api/getservices`
@@ -74,27 +85,26 @@ List of services to which the user is connected
 # MongoDB documents
 ## Users
     user {
-        username: {
-            type: String,
-            unique: true
-        },
-        password: {
-            type: String
-        },
-        firstName: {
-            type: String
-        },
-        lastName: {
-            type: String
-        },
-        email: {
-            type: String,
-            unique: true,
-            required: true
+        local {
+            email: {
+                type: String,
+                unique: true,
+                required: true
+            },   
+            password: {
+                type: String
+            },
+            firstName: {
+                type: String
+            },
+            lastName: {
+                type: String
+            },
         },
         facebook: {
             token: String,
-            id: String
+            id: String,
+            email: String
         },
         google: {
             token: String,

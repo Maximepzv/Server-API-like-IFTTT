@@ -6,23 +6,25 @@ var bcrypt = require('bcrypt-nodejs');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    password: {
-        type: String
-    },
-    firstName: {
-        type: String
-    },
-    lastName: {
-        type: String
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true
+    local: {
+        email: {
+            type: String,
+            unique: true,
+        },
+        password: {
+            type: String
+        },
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
+        }
     },
     facebook: {
+        id: String,
         token: String,
-        id: String
+        email: String
     }
 });
 
@@ -33,16 +35,16 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function (next) {
     var user = this;
-    if (this.password && (this.isModified('password') || this.isNew)) {
+    if (this.local.password && (this.isModified('password') || this.isNew)) {
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
                 return next(err);
             }
-            bcrypt.hash(user.password, salt, null, function (err, hash) {
+            bcrypt.hash(user.local.password, salt, null, function (err, hash) {
                 if (err) {
                     return next(err);
                 }
-                user.password = hash;
+                user.local.password = hash;
                 next();
             });
         });
@@ -52,7 +54,7 @@ UserSchema.pre('save', function (next) {
 });
 
 UserSchema.methods.comparePassword = function (passw, cb) {
-    bcrypt.compare(passw, this.password, function (err, isMatch) {
+    bcrypt.compare(passw, this.local.password, function (err, isMatch) {
         if (err) {
             return cb(err);
         }
@@ -64,21 +66,20 @@ UserSchema.methods.comparePassword = function (passw, cb) {
 UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
     let that = this;
 
-    return this.findOneAndUpdate({$or:[
-            {email: profile.emails[0].value},
-            {'facebook.id': profile.id}
-        ]}, {
-            email: profile.emails[0].value,
+    return this.findOneAndUpdate(
+            {'facebook.id': profile.id},
+        {
+            'facebook.email': profile.emails[0].value,
             'facebook.id': profile.id,
             'facebook.token': accessToken
         }, function(err, user) {
         // no user was found, lets create a new one
         if (!user) {
             var newUser = new that({
-                email: profile.emails[0].value,
                 facebook: {
                     id: profile.id,
-                    token: accessToken
+                    token: accessToken,
+                    email: profile.emails[0].value
                 }
             });
 
