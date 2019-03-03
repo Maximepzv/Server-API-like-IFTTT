@@ -3,6 +3,7 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
+import morganBody from 'morgan-body';
 import bodyParser from 'body-parser';
 import passport from 'passport';
 import mongoose from 'mongoose';
@@ -39,7 +40,8 @@ import initializePassportUser from './passport-user';
 app.use(cookieParser());
 
 // logger
-app.use(morgan('dev'));
+app.use(morgan('/////REQUEST\nContent-Type: :req[Content-Type] \nAuthorization: :req[Authorization]'));
+morganBody(app);
 
 // 3rd party middleware
 app.options('*', cors(config.server.cors));
