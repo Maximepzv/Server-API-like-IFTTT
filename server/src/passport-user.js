@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import FacebookTokenStrategy from 'passport-facebook-token';
+const GoogleStrategy = require('passport-token-google').Strategy;
 
 import User from './models/user'
 import jwt from 'jsonwebtoken';
@@ -46,6 +47,7 @@ export default (app) => {
                     function (err, user) {
                         user.facebook.id = profile.id;
                         user.facebook.token = accessToken;
+                        user.facebook.refreshToken = refreshToken;
                         user.facebook.email = profile.emails[0].value;
                         user.save();
                         return done(null, req.user);
@@ -53,6 +55,33 @@ export default (app) => {
                 );
             } else {
                 User.upsertFbUser(accessToken, refreshToken, profile, function (err, user) {
+                    return done(err, user);
+                });
+            }
+        }
+    ));
+
+    /* GOOGLE STRATEGY */
+    passport.use(new GoogleStrategy({
+            clientID: config.google.clientID,
+            clientSecret: config.google.clientSecret,
+            passReqToCallback: true
+        },
+        function(req, accessToken, refreshToken, profile, done) {
+            if (req.user) {
+                User.findOne(
+                    {'_id': req.user._id},
+                    function (err, user) {
+                        user.google.id = profile.id;
+                        user.google.token = accessToken;
+                        user.google.refreshToken = refreshToken;
+                        user.google.email = profile.emails[0].value;
+                        user.save();
+                        return done(null, req.user);
+                    }
+                );
+            } else {
+                User.upsertGoogleUser(accessToken, refreshToken, profile, function (err, user) {
                     return done(err, user);
                 });
             }
@@ -109,6 +138,20 @@ export default (app) => {
 
     /* FACEBOOK */
     app.post('/api/auth/facebook', passport.authenticate('facebook-token', {session: false}), function(req, res, next) {
+        if (!req.user) {
+            return res.send(401, 'User Not Authenticated');
+        }
+
+        // prepare token for API
+        req.auth = {
+            id: req.user.id
+        };
+
+        next();
+    }, token.generateToken, token.sendToken);
+
+    /* GOOGLE */
+    app.post('/api/auth/google', passport.authenticate('google-token', {session: false}), function (req, res, next) {
         if (!req.user) {
             return res.send(401, 'User Not Authenticated');
         }

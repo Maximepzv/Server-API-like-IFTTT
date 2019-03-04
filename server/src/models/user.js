@@ -24,6 +24,13 @@ var UserSchema = new Schema({
     facebook: {
         id: String,
         token: String,
+        refreshToken: String,
+        email: String
+    },
+    google: {
+        id: String,
+        token: String,
+        refreshToken: String,
         email: String
     }
 });
@@ -71,7 +78,8 @@ UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, 
         {
             'facebook.email': profile.emails[0].value,
             'facebook.id': profile.id,
-            'facebook.token': accessToken
+            'facebook.token': accessToken,
+            'facebook.refreshToken': refreshToken
         }, function(err, user) {
         // no user was found, lets create a new one
         if (!user) {
@@ -94,6 +102,41 @@ UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, 
         }
     });
 };
+
+/* GOOGLE INSERT OR UPDATE USER */
+UserSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profile, cb) {
+    let that = this;
+
+    return this.findOneAndUpdate(
+        {'google.id': profile.id},
+        {
+            'google.email': profile.emails[0].value,
+            'google.id': profile.id,
+            'google.token': accessToken,
+            'google.refreshToken': refreshToken
+        }, function(err, user) {
+            // no user was found, lets create a new one
+            if (!user) {
+                var newUser = new that({
+                    google: {
+                        id: profile.id,
+                        token: accessToken,
+                        email: profile.emails[0].value
+                    }
+                });
+
+                newUser.save(function(error, savedUser) {
+                    if (error) {
+                        console.log(error);
+                    }
+                    return cb(error, savedUser);
+                });
+            } else {
+                return cb(err, user);
+            }
+        });
+};
+
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', UserSchema);
