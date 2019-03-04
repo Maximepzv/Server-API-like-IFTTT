@@ -20,5 +20,19 @@ export default () => {
         next();
     }, token.generateToken, token.sendToken);
 
+    /* GOOGLE */
+    router.post('/google', passport.authenticate('google-token', {session: false}), function (req, res, next) {
+        if (!req.user) {
+            return res.send(401, 'User Not Authenticated');
+        }
+
+        // prepare token for API
+        req.auth = {
+            id: req.user.id
+        };
+
+        next();
+    }, token.generateToken, token.sendToken);
+
     return router;
 }
