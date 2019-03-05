@@ -8,13 +8,13 @@ export default () => {
         let param = {
             'url': req.body.url,
             'title': req.body.title,
-            'word': req.body.word
+            'content': req.body.content
         };
         console.log(param);
+        let rss = new Rss(param);
         try {
-            let rss = new Rss(param);
-            let reader = rss.reader();
-            reader.start(true);
+            let job = rss.job();
+            job.start();
         }
         catch (e) {
             return res.status(500).send({success: false, msg: 'Invalid request. RSS reader has failed.'});

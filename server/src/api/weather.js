@@ -12,9 +12,10 @@ export default () => {
            'limit': req.body.limit
        };
         console.log(param);
+        let weather = new Weather(param);
         try {
-            let weather = new Weather(param);
-            weather.start();
+            let job = weather.job();
+            job.start();
         }
         catch (e) {
             return res.status(500).send({success: false, msg: 'Invalid request. Weather has failed.'});

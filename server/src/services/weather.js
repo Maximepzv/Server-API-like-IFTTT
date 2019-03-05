@@ -6,10 +6,14 @@ export default class {
     constructor(param) {
         this.param = param;
         weather.setAPPID(config.openweatherApis.key);
-        this.weatherInit(this.param);
+        weather.setLang('en');
+        weather.setCity(this.param.city);
+        weather.setUnits(this.param.units);
     }
 
-    async start() {
+    job() {
+        /*return new CronJob("* * * * * *",
+            this.chooseFunction(Number(this.param.fn), Number(this.param.limit)), 'France/Paris');*/
         let weatherFunctions = [
             this.temperatureBelow,
             this.temperatureAbove,
@@ -18,27 +22,19 @@ export default class {
             this.humidityAbove,
             this.humidityBelow
         ];
-        weatherFunctions[Number(this.param.fn)](Number(this.param.limit));
-        //setInterval(weatherFunctions[this.param.fn], 5 * 60 * 1000, this.param.limit);
-    }
-
-    weatherInit(json) {
-        weather.setLang('en');
-        weather.setCity(json.city);
-        weather.setUnits(json.units);
-    }
+        return new CronJob("0 */5 * * * *", function (param) {
+            console.log(new Date);
+            weatherFunctions[Number(param.fn)](Number(param.limit));
+        }, this.param);
+    };
 
     temperatureBelow(limit) {
-        console.log('temperature Below');
-        new CronJob("* * * * * *", function () {
             weather.getTemperature(function(err, result) {
                 if (err) console.log(err);
-                console.log(result);
                 if (limit > result) {
                     console.log("La température est en dessous de la limite");
                 }
             });
-        });
     }
 
     temperatureAbove(limit) {
