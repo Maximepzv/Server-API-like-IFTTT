@@ -5,12 +5,14 @@ import recipe from './recipe';
 import clock from './clock';
 import rss from "./rss";
 import weather from './weather';
+import area from './area';
 
 export default ({ }) => {
     let api = Router();
 
     // routes
     api.use('/add', addServices(api));
+    api.use('/', area(api));
     api.use('/', recipe(api));
     api.use('/', clock(api));
     api.use('/', rss(api));

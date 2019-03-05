@@ -1,11 +1,11 @@
 // load the things we need
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
+let mongoose = require('mongoose');
+let bcrypt = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+let UserSchema = new Schema({
     local: {
         email: {
             type: String,
@@ -41,7 +41,7 @@ var UserSchema = new Schema({
 /*UserSchema.statics.findOrCreate = require("find-or-create");*/
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+    let user = this;
     if (this.local.password && (this.isModified('password') || this.isNew)) {
         bcrypt.genSalt(10, function (err, salt) {
             if (err) {
@@ -83,7 +83,7 @@ UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, 
         }, function(err, user) {
         // no user was found, lets create a new one
         if (!user) {
-            var newUser = new that({
+            let newUser = new that({
                 facebook: {
                     id: profile.id,
                     token: accessToken,
@@ -117,7 +117,7 @@ UserSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profi
         }, function(err, user) {
             // no user was found, lets create a new one
             if (!user) {
-                var newUser = new that({
+                let newUser = new that({
                     google: {
                         id: profile.id,
                         token: accessToken,
