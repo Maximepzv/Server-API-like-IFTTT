@@ -8,20 +8,20 @@ export default () => {
        let param = {
            'city': req.body.city,
            'units': req.body.units,
-           'function': req.body.fn,
+           'fn': req.body.fn,
            'limit': req.body.limit
        };
-       console.log(param);
-        let weather = new Weather(param);
-        weather.start();
-        /*try {
+        console.log(param);
+        try {
             let weather = new Weather(param);
             weather.start();
         }
         catch (e) {
             return res.status(500).send({success: false, msg: 'Invalid request. Weather has failed.'});
         }
-        return res.status(200).send({success: true, msg: 'New weather with param ' + param});*/
+        return res.status(200).send({success: true, msg: 'New weather with '
+            + '{City: ' + param.city + ' Units: ' + param.units
+            + ' Function: ' + param.fn + ' Limit: ' + param.limit + '}'});
     });
 
     return router;

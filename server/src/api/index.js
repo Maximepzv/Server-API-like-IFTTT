@@ -4,6 +4,7 @@ import addServices from './addServices';
 import recipe from './recipe';
 import clock from './clock';
 import rss from "./rss";
+import weather from './weather';
 
 export default ({ }) => {
     let api = Router();
@@ -13,6 +14,7 @@ export default ({ }) => {
     api.use('/', recipe(api));
     api.use('/', clock(api));
     api.use('/', rss(api));
+    api.use('/', weather(api));
     api.get('/testAuth', function (req, res) {
         return res.status(200).send({success: true, msg: 'Authorized', user: req.user});
     });
