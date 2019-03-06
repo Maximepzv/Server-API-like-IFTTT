@@ -8,13 +8,15 @@ const reaction2 = require('./reactions/reaction2');
 
 const clock = require('./actions/clock');
 const rss = require('./actions/rss');
+const weather = require('./actions/weather');
 
 module.exports = {
   actions: {
       'action1': action1.start,
       'action2': action2.start,
       'clock': clock.start,
-      'rss': rss.start
+      'rss': rss.start,
+      'weather': weather.start
   },
   reactions: {
       'reaction1': reaction1.start,

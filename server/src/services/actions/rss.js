@@ -3,7 +3,11 @@ const CronJob = require('cron').CronJob;
 
 module.exports = {
     start: function (options, reaction, List) {
-        console.log("LA");
+        /* OPTIONS FORMAT :
+           'url':      options.url,
+           'title':    options.title,
+           'content':  options.content,
+        */
         let parser = new Parser();
         let oldItem = {
           title: '',
