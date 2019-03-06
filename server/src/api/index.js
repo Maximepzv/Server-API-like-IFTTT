@@ -15,7 +15,7 @@ export default ({ }) => {
     api.use('/', recipe(api));
     api.use('/', rss(api));
     api.use('/', weather(api));
-    api.get('/testAuth', function (req, res) {
+    api.get('/getProfile', function (req, res) {
         return res.status(200).send({success: true, msg: 'Authorized', user: req.user});
     });
 

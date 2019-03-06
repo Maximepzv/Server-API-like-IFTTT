@@ -19,7 +19,9 @@
     - index.js                 <!-- setup our application -->
     - passport-user.js         <!-- our passportJs strategy and routes configuration -->
 
+
 # HTTP requests
+
 ## POST Signup
 `http://localhost:8080/api/signup`
 #### Description
@@ -30,6 +32,8 @@ Creates a new user in the database
 **username** test@example.com
 
 **password** 1234
+
+
 
 ## POST Signin
 `http://localhost:8080/api/signin`
@@ -42,6 +46,8 @@ Creates a signed token and returns it in response
 
 **password** 1234
 
+
+
 ## POST Authentication with Facebook
 `http://localhost:8080/api/auth/facebook`
 #### Description
@@ -50,6 +56,8 @@ Create or find user in database then creates a signed token and returns it in re
 **Content-Type** application/x-www-form-urlencoded
 #### BODY
 **access_token** access_token from facebook
+
+
 
 ## POST Add Facebook service to the user
 `http://localhost:8080/api/add/facebook`
@@ -60,6 +68,17 @@ Add the facebook service to the user then creates a signed token and returns it 
 **Authorization** JWT {{token}}
 #### BODY
 **access_token** access_token from facebook
+
+
+
+## GET getProfile
+`http://localhost:8080/api/getProfile`
+#### Description
+Returns the profile of the authenticated user
+#### HEADERS
+**Authorization** JWT {{token}}
+
+
 
 ## GET getServices
 `http://localhost:8080/api/getservices`
@@ -78,6 +97,8 @@ List of services to which the user is connected
         "_id": "..."
     ]
 
+
+
 ## GET getActionsByService
 `http://localhost:8080/api/getActionsByService`
 #### HEADERS
@@ -86,6 +107,8 @@ List of services to which the user is connected
 **Service** {{Title of the service}} 
 #### RESPONSE
 List the actions available for this service
+
+
 
 ## GET getServicesByAction
 `http://localhost:8080/api/getServicesByAction`
@@ -96,6 +119,8 @@ List the actions available for this service
 #### RESPONSE
 List the services available for this action
 
+
+
 ## GET getReactsByServices
 `http://localhost:8080/api/getReactsByServices`
 #### HEADERS
@@ -105,12 +130,16 @@ List the services available for this action
 #### RESPONSE
 List the reactions available for this service
 
+
+
 ## GET getArea
 `http://localhost:8080/api/getArea`
 #### HEADERS
 **Authorization** JWT {{token}}
 #### RESPONSE
 Lists the reaction actions to which the user has subscribed
+
+
 
 ## PUT newArea
 `http://localhost:8080/api/newArea`
@@ -132,6 +161,8 @@ Starts it and saves it in the database.
     	    "options": Object
 	    }
     }
+
+
 
 # Authentication
 ### Dependencies
