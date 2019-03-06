@@ -36,34 +36,4 @@ export default class {
             });
         }, this);
     }
-
-    /*reader() {
-        let reader = new FeedSub(this.param.url, {
-           interval: 1 // Check feed every 10 minutes.
-        });
-
-        reader.on('item', (item) => {
-            console.log("Un nouvel item est arrivé");
-            if (this.param.title !== undefined) {
-                console.log("title");
-                if (item.title.includes(this.param.word)) {
-                    console.log("title match");
-                    if (this.oldItem.title !== item.title) {
-                        console.log("Trigger Title");
-                        this.oldItem = item;
-                    }
-                }
-            } else if (this.param.content !== undefined) {
-                console.log("content");
-                if (item.content.includes(this.param.word)) {
-                    console.log("content match");
-                    if (this.oldItem.title !== item.title) {
-                        console.log("Trigger Content");
-                        this.oldItem = item;
-                    }
-                }
-            }
-        });
-        return reader;
-    };*/
 }
