@@ -2,35 +2,45 @@ let Parser = require('rss-parser');
 const CronJob = require('cron').CronJob;
 
 module.exports = {
-    start: function (options, reaction, List) {
+    matches_on_title: function (options, reaction, List) {
         /* OPTIONS FORMAT :
            'url':      options.url,
-           'title':    options.title,
-           'content':  options.content,
+           'title':    options.title
         */
         let parser = new Parser();
-        let oldItem = {
-          title: '',
-          content: ''
-        };
+        let oldTitle = '';
         new CronJob("0 */5 * * * *",
-        async function () {
-            const feed = await parser.parseURL(options.url);
-            feed.items.forEach(item => {
-                if (options.title !== undefined && options.title !== '') {
-                    if (item.title.includes(options.title))
-                        if (oldItem.title !== item.title) {
+            async function () {
+                const feed = await parser.parseURL(options.url);
+                feed.items.forEach(item => {
+                    if (options.title !== undefined && options.title !== '') {
+                        if (item.title.includes(options.title)) {
                             List.reactions[reaction.title](reaction.options);
-                            oldItem = item;
+                            oldTitle = item.title;
                         }
-                } else if (options.content !== undefined && options.content !== '') {
-                    if (item.content.includes(options.content))
-                        if (oldItem.title !== item.title) {
+                    }
+                });
+        }).start();
+    },
+
+    matches_on_content: function (options, reaction, List) {
+        /* OPTIONS FORMAT :
+           'url':      options.url,
+           'content':  options.content
+        */
+        let parser = new Parser();
+        let oldContent = '';
+        new CronJob("0 */5 * * * *",
+            async function () {
+                const feed = await parser.parseURL(options.url);
+                feed.items.forEach(item => {
+                    if (options.content !== undefined && options.content !== '') {
+                        if (item.content.includes(options.content)) {
                             List.reactions[reaction.title](reaction.options);
-                            oldItem = item;
+                            oldContent = item.content;
                         }
-                }
-            });
+                    }
+                });
         }).start();
     }
 };

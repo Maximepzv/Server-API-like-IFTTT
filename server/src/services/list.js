@@ -14,9 +14,15 @@ module.exports = {
   actions: {
       'action1': action1.start,
       'action2': action2.start,
-      'clock': clock.start,
-      'rss': rss.start,
-      'weather': weather.start
+      'on_every_tick': clock.on_every_tick,
+      'matches_on_title': rss.matches_on_title,
+      'matches_on_content': rss.matches_on_content,
+      'temperatureBelow': weather.temperatureBelow,
+      'temperatureAbove': weather.temperatureAbove,
+      'pressureBelow': weather.pressureBelow,
+      'pressureAbove': weather.pressureAbove,
+      'humidityAbove': weather.humidityAbove,
+      'humidityBelow': weather.humidityBelow
   },
   reactions: {
       'reaction1': reaction1.start,

@@ -1,7 +1,7 @@
 const CronJob = require('cron').CronJob;
 
 module.exports = {
-    start: function(options, reaction, List) {
+    on_every_tick: function(options, reaction, List) {
         /* OPTIONS FORMAT :
            'cronTime':  options.cronTime,
         */
