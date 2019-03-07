@@ -75,7 +75,7 @@ const self = module.exports = {
             weather.setLang('en');
             weather.setCity(options.city);
             weather.setUnits(options.units);
-            weather.getPressure(function (err, result) {
+            weather.getHumidity(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
                     List.reactions[reaction.title](reaction.options);
@@ -90,7 +90,7 @@ const self = module.exports = {
             weather.setLang('en');
             weather.setCity(options.city);
             weather.setUnits(options.units);
-            weather.getPressure(function (err, result) {
+            weather.getHumidity(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
                     List.reactions[reaction.title](reaction.options);
