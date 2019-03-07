@@ -14,7 +14,7 @@ module.exports = {
                 const feed = await parser.parseURL(options.url);
                 feed.items.forEach(item => {
                     if (options.title !== undefined && options.title !== '') {
-                        if (item.title.includes(options.title)) {
+                        if (item.title.includes(options.title) && oldTitle !== item.title) {
                             List.reactions[reaction.title](reaction.options);
                             oldTitle = item.title;
                         }
@@ -35,7 +35,7 @@ module.exports = {
                 const feed = await parser.parseURL(options.url);
                 feed.items.forEach(item => {
                     if (options.content !== undefined && options.content !== '') {
-                        if (item.content.includes(options.content)) {
+                        if (item.content.includes(options.content) && oldContent !== item.title) {
                             List.reactions[reaction.title](reaction.options);
                             oldContent = item.content;
                         }

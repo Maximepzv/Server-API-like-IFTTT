@@ -1,0 +1,19 @@
+version: '3'
+services:
+  server:
+    container_name: server
+    restart: always
+    build:
+      server
+    ports:
+      - "8080:8080"
+    links:
+      - db
+  db:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+volumes:
+  myshare:
+    driver: local

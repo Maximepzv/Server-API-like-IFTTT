@@ -7,6 +7,6 @@ module.exports = {
         */
         new CronJob(options.cronTime, function () {
             List.reactions[reaction.title](reaction.options);
-        }).start();
+        }, 	null, false, 'Europe/Paris').start();
     }
 };

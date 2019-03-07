@@ -18,7 +18,6 @@ const self = module.exports = {
             weather.getTemperature(function(err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    console.log("La température est en dessous de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });
@@ -34,7 +33,6 @@ const self = module.exports = {
             weather.getTemperature(function(err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    console.log("La température est au dessus de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });
@@ -50,7 +48,6 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    console.log("La pression est en dessous de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });
@@ -66,7 +63,6 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    console.log("La pression est au dessus de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });
@@ -82,7 +78,6 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    console.log("L'humidité est en dessous de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });
@@ -98,7 +93,6 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    console.log("L'humidité est au dessus de la limite");
                     List.reactions[reaction.title](reaction.options);
                 }
             });

@@ -13,16 +13,16 @@ export default () => {
 
     router.put('/newArea', function (req, res) {
         // On essaye d'executer l'action
-        List.actions[req.body.action.title](req.body.action.options, req.body.reaction, List);
+        List.actions[req.body.recipe.action.title](req.body.recipe.action.options, req.body.recipe.reaction, List);
         // TODO : CATCH si l'action échoue on retourne un message d'erreur
             //return res.status(501).send({success: false, msg: 'Not Implemented or invalid parameters'});
         // l'action s'exécuter correctement et enregistrement d'un nouveau document MongoDB area
         let newArea = new Area({
             userId: req.user._id,
-            'action.title': req.body.action.title,
-            'action.options': req.body.action.options,
-            'reaction.title': req.body.reaction.title,
-            'reaction.options': req.body.reaction.options,
+            'action.title': req.body.recipe.action.title,
+            'action.options': req.body.recipe.action.options,
+            'reaction.title': req.body.recipe.reaction.title,
+            'reaction.options': req.body.recipe.reaction.options,
         });
         // save the area
         newArea.save(function(err) {
