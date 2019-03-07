@@ -81,7 +81,7 @@ const self = module.exports = {
                     List.reactions[reaction.title](reaction.options);
                 }
             });
-        });
+        }).start();
     },
 
     humidityAbove: function(options, reaction, List) {
@@ -96,6 +96,6 @@ const self = module.exports = {
                     List.reactions[reaction.title](reaction.options);
                 }
             });
-        });
+        }).start();
     }
 };
