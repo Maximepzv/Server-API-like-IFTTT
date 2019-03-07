@@ -11,6 +11,8 @@ const rss = require('./actions/rss');
 const weather = require('./actions/weather');
 const example = require('./reactions/example');
 
+const calendar = require('./reactions/calendar');
+
 module.exports = {
   actions: {
       'action1': action1.start,
@@ -38,5 +40,6 @@ module.exports = {
       'examplePressureAbove': example.examplePressureAbove,
       'exampleHumidityBelow': example.exampleHumidityBelow,
       'exampleHumidityAbove': example.exampleHumidityAbove
+      'calendar': calendar.start
   }
 };
