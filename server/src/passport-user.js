@@ -68,14 +68,7 @@ export default (app) => {
             callbackURL: "http://localhost:8080/api/auth/google/callback",
             passReqToCallback : true
         },
-        function(accessToken, refreshToken, profile, done, req) {
-            console.log('accessToken:');
-            console.log(accessToken);
-            console.log('refreshToken:');
-            console.log(refreshToken);
-            if (req) {
-                console.log('USER OK');
-            }
+        function(req, accessToken, refreshToken, profile, done) {
             if (req.user) {
                 User.findOne(
                     {'_id': profile.id},
@@ -158,13 +151,12 @@ export default (app) => {
     }, token.generateToken, token.sendToken);
 
     /* GOOGLE */
-    app.get('/api/auth/google', passport.authenticate('google', {session: false, access_type: "offline", prompt: 'consent', scope: config.google.scope}));
+    app.get('/api/auth/google', passport.authenticate('google', {session: false, accessType: "offline", prompt: 'consent', scope: config.google.scope}));
 
     app.get('/api/auth/google/callback',
         passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:8081/signin' }),
         function(req, res) {
             const token = jwt.sign(req.user.toJSON(), config.auth.secret);
             res.redirect('http://localhost:8081/signin?token=' + token);
-            //res.send('<script type="text/javascript">window.onload=function(){window.close();};</script>');
         });
 }
