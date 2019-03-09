@@ -8,8 +8,6 @@ import bodyParser from 'body-parser';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import connectMongo from 'connect-mongo';
-import session from 'express-session';
 
 import api from './api';
 
@@ -23,17 +21,6 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.database.uri, { useCreateIndex: true, useNewUrlParser: true })
     .then(() =>  console.log('connection to database successful'))
     .catch((err) => console.error(err));
-
-const MongoStore = connectMongo(session);
-const db = mongoose.connection;
-
-// change session strategy
-app.use(session({
-    secret: config.auth.secret,
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({ mongooseConnection: db })
-}));
 
 import initializePassportUser from './passport-user';
 

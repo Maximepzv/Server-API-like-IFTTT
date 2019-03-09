@@ -121,7 +121,8 @@ UserSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profi
                     google: {
                         id: profile.id,
                         token: accessToken,
-                        email: profile.emails[0].value
+                        email: profile.emails[0].value,
+                        refreshToken: refreshToken
                     }
                 });
 
