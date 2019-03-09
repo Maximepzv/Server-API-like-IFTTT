@@ -13,12 +13,14 @@ ex:
 2019-03-14 or 2019-03-14T10:42:00
  */
 
+import config from '../../../properties/config';
+
 module.exports = {
     start: function(options, user) {
         console.log('Calendar reaction executed');
         const oAuth2Client = new google.auth.OAuth2(
-            "336340546827-7j7ktfj77g2jr9b551ulogjacouc5kcs.apps.googleusercontent.com",
-            "vBZ5V5XqMVRV4X0vJIqLIMnL",
+            config.google.clientID,
+            config.google.clientSecret,
             "http://localhost:8081/home");
         oAuth2Client.setCredentials({
             "access_token": user.google.token,

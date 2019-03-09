@@ -12,6 +12,8 @@ options.subject : Email subject
 options.content : Email content
 */
 
+import config from '../../../properties/config';
+
 module.exports = {
     start: function(options, user) {
         console.log('Reaction: sending mail');
@@ -22,10 +24,10 @@ module.exports = {
 			auth: {
 				type: 'OAuth2',
 				user: options.userEmail,
-				clientId: options.clientId,
-				clientSecret: options.clientSecret,
-				refreshToken: options.refreshToken,
-				accessToken: options.accessToken,
+				clientId: config.google.clientID,
+				clientSecret: config.google.clientSecret,
+				refreshToken: user.google.refreshToken,
+				accessToken: user.google.token,
 			}
 		});
 
