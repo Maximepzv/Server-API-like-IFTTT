@@ -15,7 +15,7 @@ ex:
 
 import config from '../../../properties/config';
 
-module.exports = {
+const exports = module.exports = {
     start: function(options, user) {
         console.log('Calendar reaction executed');
         const oAuth2Client = new google.auth.OAuth2(
@@ -28,13 +28,14 @@ module.exports = {
             "scope":"https://www.googleapis.com/auth/calendar.events",
             /*"token_type":"Bearer",*/
         });
-        this.addEvent(oAuth2Client, options);
+        exports.addEvent(oAuth2Client, options);
     },
 
     addEvent: function(auth, options) {
         let eventName = options.eventName;
         let eventStart = options.eventStart;
         let eventEnd = options.eventEnd;
+        let res = {};
 
         if (eventStart.indexOf('T') >= 0 && eventEnd.indexOf('T') >= 0) {
             res = {

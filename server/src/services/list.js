@@ -9,8 +9,9 @@ const reaction2 = require('./reactions/reaction2');
 const clock = require('./actions/clock');
 const rss = require('./actions/rss');
 const weather = require('./actions/weather');
-const example = require('./reactions/example');
+const launch = require('./actions/launch');
 
+const example = require('./reactions/example');
 const add_to_calendar = require('./reactions/add_to_calendar');
 const send_mail = require('./reactions/send_mail');
 const ping_once = require('./reactions/ping_once');
@@ -27,7 +28,8 @@ module.exports = {
       'pressureBelow': weather.pressureBelow,
       'pressureAbove': weather.pressureAbove,
       'humidityAbove': weather.humidityAbove,
-      'humidityBelow': weather.humidityBelow
+      'humidityBelow': weather.humidityBelow,
+      'launch': launch.start
   },
   reactions: {
       'reaction1': reaction1.start,

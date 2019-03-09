@@ -7,7 +7,7 @@ export default () => {
     let token = new Token();
 
     /* GOOGLE */
-    router.post('/google', passport.authenticate('google-token', {session: false}), function (req, res, next) {
+    router.post('/google', passport.authenticate('google', {session: false}), function (req, res, next) {
         if (!req.user) {
             return res.send(401, 'User Not Authenticated');
         }
