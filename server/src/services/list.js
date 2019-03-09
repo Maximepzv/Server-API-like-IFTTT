@@ -39,7 +39,7 @@ module.exports = {
       'examplePressureBelow': example.examplePressureBelow,
       'examplePressureAbove': example.examplePressureAbove,
       'exampleHumidityBelow': example.exampleHumidityBelow,
-      'exampleHumidityAbove': example.exampleHumidityAbove
+      'exampleHumidityAbove': example.exampleHumidityAbove,
       'calendar': calendar.start
   }
 };
