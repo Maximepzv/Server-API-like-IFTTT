@@ -43,7 +43,7 @@ module.exports = {
       'exampleHumidityBelow': example.exampleHumidityBelow,
       'exampleHumidityAbove': example.exampleHumidityAbove,
       'add_to_calendar': add_to_calendar.start,
-      'send_mail': send_mail.start
+      'send_mail': send_mail.start,
       'ping_once': ping_once.start
   }
 };
