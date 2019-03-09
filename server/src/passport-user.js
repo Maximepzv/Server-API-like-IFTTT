@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import FacebookTokenStrategy from 'passport-facebook-token';
-const GoogleStrategy = require('passport-token-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 import User from './models/user'
 import jwt from 'jsonwebtoken';
@@ -65,12 +65,13 @@ export default (app) => {
     passport.use(new GoogleStrategy({
             clientID: config.google.clientID,
             clientSecret: config.google.clientSecret,
-            passReqToCallback: true
+            callbackURL: "http://localhost:8080/api/auth/google/callback",
+            passReqToCallback : true
         },
         function(req, accessToken, refreshToken, profile, done) {
             if (req.user) {
                 User.findOne(
-                    {'_id': req.user._id},
+                    {'_id': profile.id},
                     function (err, user) {
                         user.google.id = profile.id;
                         user.google.token = accessToken;
@@ -81,13 +82,12 @@ export default (app) => {
                     }
                 );
             } else {
-                User.upsertGoogleUser(accessToken, refreshToken, profile, function (err, user) {
+                User.upsertGoogleUser(accessToken, refreshToken, profile, (err, user) => {
                     return done(err, user);
                 });
             }
         }
     ));
-
     //append to app
     app.use(passport.initialize());
 
@@ -151,16 +151,11 @@ export default (app) => {
     }, token.generateToken, token.sendToken);
 
     /* GOOGLE */
-    app.post('/api/auth/google', passport.authenticate('google-token', {session: false}), function (req, res, next) {
-        if (!req.user) {
-            return res.send(401, 'User Not Authenticated');
-        }
+    app.get('/api/auth/google', passport.authenticate('google', {session: false, access_type: "offline", prompt: 'consent', scope: config.google.scope}));
 
-        // prepare token for API
-        req.auth = {
-            id: req.user.id
-        };
-
-        next();
-    }, token.generateToken, token.sendToken);
+    app.get('/api/auth/google/callback',
+        passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:8081/signin' }),
+        function(req, res) {
+            res.redirect('http://localhost:8081/home');
+        });
 }
