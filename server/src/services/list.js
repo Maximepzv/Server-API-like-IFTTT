@@ -13,6 +13,7 @@ const example = require('./reactions/example');
 
 const add_to_calendar = require('./reactions/add_to_calendar');
 const send_mail = require('./reactions/send_mail');
+const ping_once = require('./reactions/ping_once');
 
 module.exports = {
   actions: {
@@ -43,5 +44,6 @@ module.exports = {
       'exampleHumidityAbove': example.exampleHumidityAbove,
       'add_to_calendar': add_to_calendar.start,
       'send_mail': send_mail.start
+      'ping_once': ping_once.start
   }
 };

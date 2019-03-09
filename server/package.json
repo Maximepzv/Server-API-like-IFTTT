@@ -38,6 +38,7 @@
     "passport-google-oauth": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "passport-token-google": "^0.1.2",
+    "ping": "^0.2.2",
     "rss-parser": "^3.6.3"
   }
 }
