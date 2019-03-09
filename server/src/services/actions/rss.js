@@ -2,7 +2,7 @@ let Parser = require('rss-parser');
 const CronJob = require('cron').CronJob;
 
 module.exports = {
-    matches_on_title: function (options, reaction, List) {
+    matches_on_title: function (options, reaction, List, user) {
         /* OPTIONS FORMAT :
            'url':      options.url,
            'title':    options.title
@@ -15,7 +15,7 @@ module.exports = {
                 feed.items.forEach(item => {
                     if (options.title !== undefined && options.title !== '') {
                         if (item.title.includes(options.title) && oldTitle !== item.title) {
-                            List.reactions[reaction.title](reaction.options);
+                            List.reactions[reaction.title](reaction.options, user);
                             oldTitle = item.title;
                         }
                     }
@@ -23,7 +23,7 @@ module.exports = {
         }).start();
     },
 
-    matches_on_content: function (options, reaction, List) {
+    matches_on_content: function (options, reaction, List, user) {
         /* OPTIONS FORMAT :
            'url':      options.url,
            'content':  options.content
@@ -36,7 +36,7 @@ module.exports = {
                 feed.items.forEach(item => {
                     if (options.content !== undefined && options.content !== '') {
                         if (item.content.includes(options.content) && oldContent !== item.title) {
-                            List.reactions[reaction.title](reaction.options);
+                            List.reactions[reaction.title](reaction.options, user);
                             oldContent = item.content;
                         }
                     }

@@ -9,7 +9,7 @@ const self = module.exports = {
            'limit': options.limit
         */
 
-    temperatureBelow: function (options, reaction, List) {
+    temperatureBelow: function (options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -18,13 +18,13 @@ const self = module.exports = {
             weather.getTemperature(function(err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();
     },
 
-    temperatureAbove: function(options, reaction, List) {
+    temperatureAbove: function(options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -33,13 +33,13 @@ const self = module.exports = {
             weather.getTemperature(function(err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();
     },
 
-    pressureBelow: function(options, reaction, List) {
+    pressureBelow: function(options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -48,13 +48,13 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();
     },
 
-    pressureAbove: function(options, reaction, List) {
+    pressureAbove: function(options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -63,13 +63,13 @@ const self = module.exports = {
             weather.getPressure(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();
     },
 
-    humidityBelow: function(options, reaction, List) {
+    humidityBelow: function(options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -78,13 +78,13 @@ const self = module.exports = {
             weather.getHumidity(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit > result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();
     },
 
-    humidityAbove: function(options, reaction, List) {
+    humidityAbove: function(options, reaction, List, user) {
         new CronJob("0 */5 * * * *", function () {
             weather.setAPPID(config.openweatherApis.key);
             weather.setLang('en');
@@ -93,7 +93,7 @@ const self = module.exports = {
             weather.getHumidity(function (err, result) {
                 if (err) console.log(err);
                 if (options.limit < result) {
-                    List.reactions[reaction.title](reaction.options);
+                    List.reactions[reaction.title](reaction.options, user);
                 }
             });
         }).start();

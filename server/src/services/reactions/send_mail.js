@@ -13,7 +13,7 @@ options.content : Email content
 */
 
 module.exports = {
-    start: function(options) {
+    start: function(options, user) {
         console.log('Reaction: sending mail');
 
 		var nodemailer = require('nodemailer');

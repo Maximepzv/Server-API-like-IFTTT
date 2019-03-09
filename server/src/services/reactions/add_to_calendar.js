@@ -14,18 +14,17 @@ ex:
  */
 
 module.exports = {
-    start: function(options) {
+    start: function(options, user) {
         console.log('Calendar reaction executed');
         const oAuth2Client = new google.auth.OAuth2(
             "336340546827-7j7ktfj77g2jr9b551ulogjacouc5kcs.apps.googleusercontent.com",
             "vBZ5V5XqMVRV4X0vJIqLIMnL",
             "http://localhost:8081/home");
         oAuth2Client.setCredentials({
-            "access_token":"ya29.GlzFBtSHxUW__F_kZbaIE4RABgAz4A4SuocpvxHxeAIOAK1PjszdFrgr-hxn4xT147-BMvdWWi7aWGL_MZX96RpLUZS_rlqanjH3xH1CHcmzV_vZu99uJvd0XvcFxg",
-            "refresh_token":"1/4Rg_PstR7dcrAYUS6sxDZ0i4FNwFIydo--NPknFHZm4",
+            "access_token": user.google.token,
+            "refresh_token": user.google.refreshToken,
             "scope":"https://www.googleapis.com/auth/calendar.events",
-            "token_type":"Bearer",
-            "expiry_date":1551976715233
+            /*"token_type":"Bearer",*/
         });
         this.addEvent(oAuth2Client, options);
     },

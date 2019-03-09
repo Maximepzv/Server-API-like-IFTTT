@@ -1,34 +1,34 @@
 module.exports = {
-    exampleEveryDayAt: function(options) {
+    exampleEveryDayAt: function(options, user) {
         console.log('Every Day At');
         console.log(new Date());
     },
-    exampleEveryHourAt: function(options) {
+    exampleEveryHourAt: function(options, user) {
         console.log('Every Hour At');
         console.log(new Date());
     },
-    exampleMatchInTitle: function(options) {
+    exampleMatchInTitle: function(options, user) {
         console.log('Match in title');
     },
-    exampleMatchInContent: function(options) {
+    exampleMatchInContent: function(options, user) {
         console.log('Match in content');
     },
-    exampleTemperatureBelow: function(options) {
+    exampleTemperatureBelow: function(options, user) {
         console.log('Temperature Below');
     },
-    exampleTemperatureAbove: function(options) {
+    exampleTemperatureAbove: function(options, user) {
         console.log('Temperature Above');
     },
-    examplePressureBelow: function(options) {
+    examplePressureBelow: function(options, user) {
         console.log('Pressure Below');
     },
-    examplePressureAbove: function(options) {
+    examplePressureAbove: function(options, user) {
         console.log('Pressure Above');
     },
-    exampleHumidityBelow: function(options) {
+    exampleHumidityBelow: function(options, user) {
         console.log('Humidity Below');
     },
-    exampleHumidityAbove: function(options) {
+    exampleHumidityAbove: function(options, user) {
         console.log('Humidity Above');
     },
 };
