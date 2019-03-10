@@ -22,6 +22,8 @@
 
 
 # HTTP requests
+## Published Postman Collection
+`https://documenter.getpostman.com/view/5660009/S11RKak6` 
 
 ## POST Signup
 `http://localhost:8080/api/signup`
@@ -49,10 +51,10 @@ Creates a signed token and returns it in response
 
 
 
-## GET Authentication with Facebook
+## POST Authentication with Facebook
 `http://localhost:8080/api/auth/facebook`
 #### Description
-Create or find user in database then creates a signed token and returns it in query params in the callback url
+Create or find user in database then creates a signed token and returns it
 
 
 
