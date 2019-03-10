@@ -1,24 +1,24 @@
 # Application structure:    
     - properties
-        ------ config.json     <!-- will hold our datas configuration -->
+        ------ config.json             <!-- will hold our datas configuration -->
     
     - models
-        ------ user.js         <!-- our user model -->
-        ------ area.js         <!-- our action / reaction model -->
+        ------ user.js                 <!-- our user model -->
+        ------ area.js                 <!-- our action / reaction model -->
         
     - src
-        ------ api             <!-- all the routes for our application -->
+        ------ api                     <!-- all the routes for our application -->
         - lib
-            ------ passport-user.js <!-- our passportJs strategy and routes configuration -->
-            ------ token.js    <!-- management functions of our Json Web Tokens -->
+            ------ passport-user.js    <!-- our passportJs strategy and routes configuration -->
+            ------ token.js            <!-- management functions of our Json Web Tokens -->
         - services
-            ------ actions     <!-- all our actions -->
-            ------ reaction    <!-- all our reactions -->
-            list.js            <!-- object containing the list of our actions and reactions -->
+            ------ actions             <!-- all our actions -->
+            ------ reaction            <!-- all our reactions -->
+            list.js                    <!-- object containing the list of our actions and reactions -->
     
-    - package.json             <!-- handle our npm packages -->
+    - package.json                     <!-- handle our npm packages -->
     
-    - index.js                 <!-- setup our application -->
+    - index.js                         <!-- setup our application -->
 
 
 # HTTP requests
