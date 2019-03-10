@@ -1,5 +1,0 @@
-{
-    "rss": ["matches_on_title", "matches_on_content"],
-    "clock": "on_every_tick",
-    "weather": ["temperatureBelow", "temperatureAbove", "pressureBelow", "pressureAbove", "humidityAbove", "humidityBelow"]
-}
