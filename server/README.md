@@ -126,14 +126,16 @@ Starts it and saves it in the database.
 #### BODY
 
     {
-	    "action": {
-    	    "title": String,
-        	"options": Object
-	    },
-	    "reaction": {
-        	"title": String,
-    	    "options": Object
-	    }
+        "recipe": {
+            "action": {
+        	    "title": String,
+                "options": Object
+	        },
+	        "reaction": {
+        	    "title": String,
+    	        "options": Object
+	        }
+        }
     }
 
 
