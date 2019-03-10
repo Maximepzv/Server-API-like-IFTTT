@@ -3,13 +3,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import FacebookTokenStrategy from 'passport-facebook-token';
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-import User from './models/user'
+import User from '../models/user'
 import jwt from 'jsonwebtoken';
 
 // import config
-import config from '../properties/config.json';
+import config from '../../properties/config.json';
 
-import Token from './services/token';
+import Token from './token';
 
 export default (app) => {
 

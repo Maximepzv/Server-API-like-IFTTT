@@ -23,7 +23,7 @@ mongoose.connect(config.database.uri, { useCreateIndex: true, useNewUrlParser: t
     .then(() =>  console.log('connection to database successful'))
     .catch((err) => console.error(err));
 
-import initializePassportUser from './passport-user';
+import initializePassportUser from './lib/passport-user';
 
 app.use(cookieParser());
 

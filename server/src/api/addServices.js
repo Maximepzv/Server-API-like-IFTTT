@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import Token from '../services/token'
+import Token from '../lib/token'
 import config from "../../properties/config";
 
 export default () => {
