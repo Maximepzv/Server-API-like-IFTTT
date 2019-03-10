@@ -25,14 +25,6 @@ module.exports = {
 			}
 		});
 
-		console.log('from ->');
-		console.log(options.userEmail);
-		console.log('to ->');
-		console.log(options.to);
-		console.log('subject ->');
-		console.log(options.subject);
-		console.log('content ->');
-		console.log(options.content);
 		const mailOptions = {
 			from: user.google.email, // sender address
 			to: options.to, // list of receivers
