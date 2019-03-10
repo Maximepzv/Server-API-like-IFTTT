@@ -8,16 +8,17 @@
         
     - src
         ------ api             <!-- all the routes for our application -->
+        - lib
+            ------ passport-user.js <!-- our passportJs strategy and routes configuration -->
+            ------ token.js    <!-- management functions of our Json Web Tokens -->
         - services
             ------ actions     <!-- all our actions -->
             ------ reaction    <!-- all our reactions -->
             list.js            <!-- object containing the list of our actions and reactions -->
-            token.js           <!-- management functions of our Json Web Tokens -->
     
     - package.json             <!-- handle our npm packages -->
     
     - index.js                 <!-- setup our application -->
-    - passport-user.js         <!-- our passportJs strategy and routes configuration -->
 
 
 # HTTP requests
@@ -48,26 +49,30 @@ Creates a signed token and returns it in response
 
 
 
-## POST Authentication with Facebook
+## GET Authentication with Facebook
 `http://localhost:8080/api/auth/facebook`
 #### Description
-Create or find user in database then creates a signed token and returns it in response
-#### HEADERS
-**Content-Type** application/x-www-form-urlencoded
-#### BODY
-**access_token** access_token from facebook
+Create or find user in database then creates a signed token and returns it in query params in the callback url
 
 
 
-## POST Add Facebook service to the user
-`http://localhost:8080/api/add/facebook`
+## GET Authentication with Google
+`http://localhost:8080/api/auth/google`
 #### Description
-Add the facebook service to the user then creates a signed token and returns it in response
-#### HEADERS
-**Content-Type** application/x-www-form-urlencoded
-**Authorization** JWT {{token}}
-#### BODY
-**access_token** access_token from facebook
+Create or find user in database then creates a signed token and returns it in query params in the callback url
+#### RESPONSE
+Redirect to `http://localhost:8081/signin?token={{token}}`
+
+
+
+## GET Add service Google
+`http://localhost:8080/api/add/google?token={{token}}`
+#### Description
+Authenticate the user from the JWT in query params then redirect him to the google's authenticate service then update his profile  
+#### PARAMS
+**token** {{token}}
+#### RESPONSE
+Redirect to `http://localhost:8081/signin?token={{token}}`
 
 
 
@@ -96,39 +101,6 @@ List of services to which the user is connected
         },
         "_id": "..."
     ]
-
-
-
-## GET getActionsByService
-`http://localhost:8080/api/getActionsByService`
-#### HEADERS
-**Authorization** JWT {{token}}
-#### BODY
-**Service** {{Title of the service}} 
-#### RESPONSE
-List the actions available for this service
-
-
-
-## GET getServicesByAction
-`http://localhost:8080/api/getServicesByAction`
-#### HEADERS
-**Authorization** JWT {{token}}
-#### BODY
-**Action** {{Title of the action}}
-#### RESPONSE
-List the services available for this action
-
-
-
-## GET getReactsByServices
-`http://localhost:8080/api/getReactsByServices`
-#### HEADERS
-**Authorization** JWT {{token}}
-#### BODY
-**Service** {{Title of the service}}
-#### RESPONSE
-List the reactions available for this service
 
 
 
@@ -204,4 +176,116 @@ Starts it and saves it in the database.
             refreshToken: String,
             email: String
         }
+    }
+
+# List of services, actions and reactions
+
+## Weather
+#### ACTIONS
+    name: temperatureBelow
+    description: This Trigger fires when the temperature drops below a specific value
+    options: {
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: temperatureAbove
+    description: This Trigger fires when the temperature rises above a specific value
+    options: {
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: pressureBelow
+    description: This Trigger fires when the pressure drops below a specific value
+    options:{
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: pressureAbove
+    description: This Trigger fires when the pressure goes above a specific value
+    options:{
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: humidityAbove
+    description: This Trigger fires when the humidity rises above a specific value
+    options:{
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: humidityBelow
+    description: This Trigger fires when the humidity drops below a specific value
+    options:{
+        'city':  City string format,
+        'units': 'imperial' or 'metric',
+        'limit': Limit value string format
+    }
+
+
+## Time
+#### ACTIONS
+    name: on_every_tick
+    description: This Trigger fires on every specific time
+    options: {
+        'cronTime':  Cron time string format,
+    }
+
+## Rss
+#### ACTIONS
+    name: matches_on_title
+    description: This Trigger fires every time a new item in the feed you specify contains a particular keyword or simple phrase in the title
+    options: {
+        'url': url of the feed,
+        'title': keyword or simple phrase, string format
+    }
+    -------------------------------------------------------------------------------------------------------------------------------------------
+    name: matches_on_content
+    description: This Trigger fires every time a new item in the feed you specify contains a particular keyword or simple phrase in the content
+    options:  {
+        'url': url of the feed,
+        'content': keyword or simple phrase, string format
+    }
+
+
+## Gmail
+#### REACTIONS
+    name : send_mail
+    description: This reaction will send an email from your Gmail account
+    options: {
+        'to': destination email address, string format
+        'subject': email subject, string format
+        'content': email content, string format
+    }
+
+## Calendar 
+#### REACTIONS
+    name: add_to_calendar
+    description: This reaction will create a new event in your Google calendar
+    options: {
+        'eventName': Name of the event
+        'eventStart': Starting date of the event
+        'eventEnd': Ending date of the event
+        -----------------------------------
+       | Date format:                      |
+       | YYYY-MM-DD or YYYY-MM-DDTHH:MM:SS |
+       | ex:                               |
+       | 2019-03-14 or 2019-03-14T10:42:00 |
+        -----------------------------------
+    }
+
+## Ping
+#### REACTIONS
+    name: ping_once
+    description: This reaction will ping a specific ip
+    options: {
+        'host': IP address to ping
     }
