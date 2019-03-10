@@ -17,7 +17,7 @@ export default (app) => {
 
     // add strategy
     let jwtOptions = {
-        "jwtFromRequest": ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+        "jwtFromRequest": ExtractJwt.fromExtractors([ExtractJwt.fromUrlQueryParameter("token"), ExtractJwt.fromAuthHeaderWithScheme("jwt")]),
         "secretOrKey": config.auth.secret
     };
 

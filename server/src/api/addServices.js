@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import passport from 'passport';
 import Token from '../services/token'
+import config from "../../properties/config";
 
 export default () => {
     let router = Router();
     let token = new Token();
 
     /* GOOGLE */
-    router.post('/google', passport.authenticate('google', {session: false}), function (req, res, next) {
+    router.get('/google', passport.authenticate('google', {session: false, accessType: "offline", prompt: 'consent', scope: config.google.scope}), function (req, res, next) {
         if (!req.user) {
             return res.send(401, 'User Not Authenticated');
         }
