@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 
 import api from './api';
+import about from './api/about'
 
 // import config
 import config from '../properties/config.json';
@@ -50,6 +51,8 @@ app.use(bodyParser.json());
 try {
     //init passport
     initializePassportUser(app);
+
+    app.use('/about.json', about({ config }));
 
     // api router
     app.use('/api', passport.authenticate('jwt', { session: false }), api({ config }));
