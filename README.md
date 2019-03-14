@@ -1,3 +1,8 @@
+# Usage
+Set your own API credentials in server/properties/config.json then start with : 
+
+    docker-compose build && docker-compose up
+    
 # Application structure:    
     - properties
         ------ config.json             <!-- will hold our datas configuration -->

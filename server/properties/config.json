@@ -1,0 +1,50 @@
+{
+  "auth" : {
+    "secret": "an_auth_secret"
+  },
+  "database": {
+    "secret": "a_db_secret",
+    "uri": "mongodb://mongo:27017/docker-node-mongo"
+  },
+  "log": {
+    "path": "logs"
+  },
+  "server": {
+    "port": 8080,
+    "bodyLimit": "100kb",
+    "cors": {
+      "origin": [
+        "http://localhost:8081",
+        "http://localhost:8080"
+      ],
+      "exposedHeaders": [
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept"
+      ]
+    }
+  },
+  "openweatherApis": {
+    "key": "your_openweathera_api_key"
+  },
+  "facebook": {
+    "clientID": "your_facebook_api_client_id",
+    "clientSecret": "your_facebook_api_client_secret",
+    "callbackURL": "http://localhost:8080/api/auth/facebook/callback"
+  },
+  "google": {
+    "clientID": "your_google_api_client_id",
+    "clientSecret": "your_google_api_client_secret",
+    "scope": [
+      "profile",
+      "email",
+      "https://mail.google.com/",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.compose",
+      "https://www.googleapis.com/auth/gmail.send",
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.events"
+    ]
+  }
+}
