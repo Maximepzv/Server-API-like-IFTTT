@@ -84,6 +84,9 @@ UserSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, 
         // no user was found, lets create a new one
         if (!user) {
             let newUser = new that({
+                local: {
+                    email: profile.id
+                },
                 facebook: {
                     id: profile.id,
                     token: accessToken,
@@ -118,6 +121,9 @@ UserSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profi
             // no user was found, lets create a new one
             if (!user) {
                 let newUser = new that({
+                    local: {
+                      email: profile.id
+                    },
                     google: {
                         id: profile.id,
                         token: accessToken,
